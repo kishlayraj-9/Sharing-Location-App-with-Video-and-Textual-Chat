@@ -19,8 +19,13 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 });
 
-io.on('connection', (socket) => {
+let onlineUsers = {};
+
+io.on('connection', (socket) => {             //emit an event 
     console.log(`a user connected ${socket.id}`);
+    socket.on('user-login', (data) => loginEventHandler(socket, data));
+
+
     socket.on('disconnect', () => {
         disconnectEventHandler(socket.id);
     })
@@ -35,4 +40,47 @@ server.listen(PORT, () => {
 //socket events
 const disconnectEventHandler = (id) =>{
     console.log(`User Disconnected ${id}`)
-}
+    removeOnlineUser(id);
+    
+};
+
+const removeOnlineUser = (id) => {
+    if(onlineUsers[id]){
+        delete onlineUsers[id];
+    };
+    broadDisconnectedUserDetails(id);
+    console.log(onlineUsers);
+};
+
+const broadDisconnectedUserDetails = (disconnectedUserSocketId) =>{
+    io.to('logged-users').emit('user-disconnected', disconnectedUserSocketId);
+};
+
+const loginEventHandler = (socket, data) => {
+
+    socket.join("logged-users");  // all logged-in user will join the room named as logged-users
+
+    onlineUsers[socket.id] = {
+        username: data.username,
+        coords: data.coords,
+    };
+
+    console.log(onlineUsers);
+
+    io.to('logged-users').emit("online-users", convertOnlineUsersToArray());
+    
+};
+
+const convertOnlineUsersToArray = () => {
+    const onlineUsersArray = [];
+
+    Object.entries(onlineUsers).forEach(([key,value]) => {
+        onlineUsersArray.push({
+            socketId: key,
+            username: value.username,
+            coords: value.coords,
+        });
+    });
+
+    return onlineUsersArray;
+};

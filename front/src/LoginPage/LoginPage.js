@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {setMyLocation} from '../MapPage/mapSlice';
 
 
@@ -11,6 +11,8 @@ import LoginInput from './LoginInput';
 
 import './LoginPage.css'
 import {getFakeLocation} from './FAKE_LOCATION';
+import { connectWithSocketIOServer } from '../socketConnection/socketConn';
+import { proceedWithLogin } from '../store/actions/loginPageAction';
 
 const isUsernameValid = (username) => {
     if(username.length > 3 && username.length <10 && !username.includes(' ')){
@@ -25,11 +27,20 @@ const LoginPage = () => {
     const [username, setUserName] = useState('');
     const [locationErrorOccurred, setLocationErrorOccured] = useState(false);
 
+    const myLocation = useSelector(state => state.map.myLocation);
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleLogin = () =>{
         //if(isUsernameValid(username)){
+            proceedWithLogin({
+                username: username,
+                coords: {
+                    lng: myLocation.lng,
+                    lat: myLocation.lat,
+                }
+            })
             navigate('/map');
         //}
     };
@@ -57,8 +68,15 @@ const LoginPage = () => {
     useEffect(() => {
         //navigator.geolocation.getCurrentPosition(onSuccess, onError, locationOptions);
         onSuccess(getFakeLocation());
-    }, []);
+    }, []);             //only one time useEffect execute intially when component renders 
 
+    useEffect(() =>{         //Here we don't use a useEffect with the if condition, then every time state changes for any variable conditions runs and nake new connection, so by used state it only runs when location changes.
+        if(myLocation){
+            connectWithSocketIOServer();
+        }
+    }, [
+        myLocation        //once the dependency changes then useEffect will execute
+    ])
     return(
         
         <div className='l_page_main_container'>
