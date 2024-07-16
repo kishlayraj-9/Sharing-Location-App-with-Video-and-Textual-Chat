@@ -5,6 +5,7 @@ import Marker from './Marker';
 
 import UserInfoCard from './UserInfoCard/UserInfoCard';
 import Messenger from '../Messenger/Messenger';
+import VideoRooms from '../VideoRooms/VideoRooms';
 
 import './MapPage.css';
 
@@ -52,6 +53,7 @@ const MapPage = () => {
                 username={cardChosenOption.username}
                 userLocation={cardChosenOption.coords}
             />}
+            <VideoRooms/>
         </div>
     );
 };

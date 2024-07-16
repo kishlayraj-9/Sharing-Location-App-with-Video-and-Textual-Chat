@@ -1,6 +1,7 @@
 import io from 'socket.io-client';
 import { onlineUsersHandler, userDisconnectedHandler } from '../store/actions/userActions';
 import { chatMessageHandler } from '../store/actions/messengerActions';
+import { videoRoomsListHandler } from '../store/actions/videoRoomActions';
 
 let socket = null;
 
@@ -19,6 +20,10 @@ export const connectWithSocketIOServer = () =>{
         chatMessageHandler(messageData);
     });
 
+    socket.on('video-rooms', (videoRooms)=>{
+        videoRoomsListHandler(videoRooms)
+    });
+
     socket.on('user-disconnected', (disconnectedUserSocketId) => {
         userDisconnectedHandler(disconnectedUserSocketId);
     });
@@ -31,4 +36,8 @@ export const login = (data) =>{          //emiiting the events for the server by
 
 export const sendChatMessage = (data) => {
     socket.emit('chat-message', data);
+}
+
+export const createVideoRoom =(data) =>{
+    socket.emit('video-room-create', data);
 }
