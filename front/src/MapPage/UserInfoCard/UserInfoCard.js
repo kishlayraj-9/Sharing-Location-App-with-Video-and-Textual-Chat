@@ -2,14 +2,15 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { calculateDistanceBetweenCoords } from '../../utils/location';
-import ChatButton from './ChatButton';
+import ActionButton from './ActionButton';
 
 import '../MapPage.css';
+
 
 const Label = ({fontSize, text}) =>{
     return(
         <p className='="map_page_card_label' style={{fontSize}}>
-            {`${text}km`}
+            {text}
         </p>
     );
 };
@@ -20,11 +21,11 @@ const UserInfoCard = ({username, userLocation, socketId}) => {
     
     return (
         <div className="map_page_card_container">
-            <ChatButton/>
             <Label text = {username} fonstSize = '16px' />
-            <Label text = {calculateDistanceBetweenCoords(myLocation, userLocation)} fonstSize = '14px'/>
+            <Label text = {`${calculateDistanceBetweenCoords(myLocation, userLocation)}km`} fonstSize = '14px'/>
+            <ActionButton socketId = {socketId} username ={username}/>
         </div>
-    );
+    );  
 };
 
 export default UserInfoCard; 

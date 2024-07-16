@@ -4,9 +4,10 @@ import {useSelector} from 'react-redux';
 import Marker from './Marker';
 
 import UserInfoCard from './UserInfoCard/UserInfoCard';
-
+import Messenger from '../Messenger/Messenger';
 
 import './MapPage.css';
+
 
 const MapPage = () => {
 
@@ -45,6 +46,7 @@ const MapPage = () => {
                     );
                 })}
             </GoogleMapReact>
+            <Messenger />
             {cardChosenOption && <UserInfoCard
                 socketId={cardChosenOption.socketId}
                 username={cardChosenOption.username}
