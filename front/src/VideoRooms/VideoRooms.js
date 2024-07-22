@@ -6,28 +6,28 @@ import ParticipantsVideos  from './ParticipantsVideos';
 
 import '../MapPage/MapPage.css';
 
-const DUMMY_ROOMS = [
-    {
-        id: 1,
-        participants: [
-            {
-                socketId:1,
-                peerId: 1,
-                username: 'Martin',
-            }
-        ]
-    },
-    {
-        id: 2,
-        participants: [
-            {
-                socketId:2,
-                peerId: 2,
-                username: 'Sunny ',
-            }
-        ]
-    }
-];
+// const DUMMY_ROOMS = [
+//     {
+//         id: 1,
+//         participants: [
+//             {
+//                 socketId:1,
+//                 peerId: 1,
+//                 username: 'Martin',
+//             }
+//         ]
+//     },
+//     {
+//         id: 2,
+//         participants: [
+//             {
+//                 socketId:2,
+//                 peerId: 2,
+//                 username: 'Sunny ',
+//             }
+//         ]
+//     }
+// ];
 
 const convertRoomsToArray = (videoRooms) => {
     const rooms = [];

@@ -13,6 +13,7 @@ import './LoginPage.css'
 import {getFakeLocation} from './FAKE_LOCATION';
 import { connectWithSocketIOServer } from '../socketConnection/socketConn';
 import { proceedWithLogin } from '../store/actions/loginPageAction';
+import { connectWithPeerServer } from '../realtimeCommunication/webRTCHandler';
 
 const isUsernameValid = (username) => {
     if(username.length > 3 && username.length <10 && !username.includes(' ')){
@@ -73,6 +74,7 @@ const LoginPage = () => {
     useEffect(() =>{         //Here we don't use a useEffect with the if condition, then every time state changes for any variable conditions runs and nake new connection, so by used state it only runs when location changes.
         if(myLocation){
             connectWithSocketIOServer();
+            connectWithPeerServer();
         }
     }, [
         myLocation        //once the dependency changes then useEffect will execute

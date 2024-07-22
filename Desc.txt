@@ -1,0 +1,16 @@
+Here are three points about the project that you can use in your resume:
+
+Project: GeoCall - A Real-time Video Calling and Location Sharing Web Application
+
+Description: Developed a real-time video calling and location sharing web application that enables users to communicate with each other via video calls, share their locations on a map, and chat with users who are not currently in a video call.
+
+Tech Stack:
+
+Frontend: React, Redux
+Development Server: localhost:3000
+Other Technologies: WebRTC, Google Maps API
+Here are three points you can use in your resume:
+
+Designed and developed a real-time video calling feature using WebRTC, enabling users to communicate with each other seamlessly.
+Implemented location sharing functionality using Google Maps API, allowing users to share their locations on a map in real-time.
+Built a scalable and efficient chat system using React and Redux, enabling users to chat with each other even when not in a video call.
